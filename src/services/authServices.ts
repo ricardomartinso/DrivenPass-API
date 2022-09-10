@@ -19,6 +19,8 @@ export async function createUser(createUser: AuthUser) {
   };
 
   await createUserDb(userCreation);
+
+  return;
 }
 
 async function verifyEmailCreation(email: string) {
