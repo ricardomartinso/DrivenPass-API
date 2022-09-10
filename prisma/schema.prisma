@@ -31,6 +31,8 @@ model Credentials {
   password String
   user Users @relation(fields: [userId], references: [id])
   userId Int
+
+  @@unique([userId, name])
 }
 
 model SafeNotes {
@@ -40,25 +42,42 @@ model SafeNotes {
   description String @db.VarChar(1000)
   user Users @relation(fields: [userId], references: [id])
   userId Int
+
+  @@unique([userId, name])
 }
 model Wifis {
   id Int @id @default(autoincrement())
+  name String
   networkName String
   password String
   user Users @relation(fields: [userId], references: [id])
   userId Int
+
+  @@unique([userId, name])
 }
+
+enum CardType {
+  credit
+  debit
+  both
+  
+  @@map("cardTypes")
+}
+
 model Cards {
   id Int @id @default(autoincrement())
+  name String
   number String @db.VarChar(16)
   cardHolderName String
   cvc String @db.VarChar(3)
   expirationDate DateTime @db.Date
   password String
   isVirtual Boolean
-  type String
+  type CardType
   user Users @relation(fields: [userId], references: [id])
   userId Int
+
+  @@unique([userId, name])
 }
 
 model Sessions {
