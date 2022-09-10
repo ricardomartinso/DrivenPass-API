@@ -7,16 +7,16 @@ export default function errorHandler(
   next: NextFunction
 ) {
   if (error) {
-    if (error.error == "NotFound") {
+    if (error.type == "NotFound") {
       return res.status(404).send(error.message);
     }
-    if (error.error == "Conflict") {
+    if (error.type == "Conflict") {
       return res.status(409).send(error.message);
     }
-    if (error.error == "NotAuthorized") {
+    if (error.type == "NotAuthorized") {
       return res.status(422).send(error.message);
     }
-    if (error.error == "Unauthorized") {
+    if (error.type == "Unauthorized") {
       return res.status(401).send(error.message);
     }
   }
