@@ -24,7 +24,6 @@ model Users {
 
 model Credentials {
   id Int @id @default(autoincrement())
-  name String
   title String
   url String
   username String
@@ -32,28 +31,28 @@ model Credentials {
   user Users @relation(fields: [userId], references: [id])
   userId Int
 
-  @@unique([userId, name])
+  @@unique([userId, title])
 }
 
 model SafeNotes {
   id Int @id @default(autoincrement())
-  name String
+  title String
   noteTitle String @db.VarChar(50)
   description String @db.VarChar(1000)
   user Users @relation(fields: [userId], references: [id])
   userId Int
 
-  @@unique([userId, name])
+  @@unique([userId, title])
 }
 model Wifis {
   id Int @id @default(autoincrement())
-  name String
+  title String
   networkName String
   password String
   user Users @relation(fields: [userId], references: [id])
   userId Int
 
-  @@unique([userId, name])
+  @@unique([userId, title])
 }
 
 enum CardType {
@@ -66,7 +65,7 @@ enum CardType {
 
 model Cards {
   id Int @id @default(autoincrement())
-  name String
+  title String
   number String @db.VarChar(16)
   cardHolderName String
   cvc String @db.VarChar(3)
@@ -77,7 +76,7 @@ model Cards {
   user Users @relation(fields: [userId], references: [id])
   userId Int
 
-  @@unique([userId, name])
+  @@unique([userId, title])
 }
 
 model Sessions {
