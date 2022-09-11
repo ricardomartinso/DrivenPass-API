@@ -3,6 +3,7 @@ import {
   createCredential as createCredentialService,
   getAllCredentialsService,
   getCredentialsById as getCredentialById,
+  deleteCredentialById,
 } from "../services/credentialServices";
 import { CreateCredential } from "../types/credentialTypes";
 
@@ -32,6 +33,11 @@ export async function getCredentialsById(req: Request, res: Response) {
   res.status(200).send(credential);
 }
 
-export async function deleteCredential(req: Request, res: Response) {
-  res.status(200).send("credentials");
+export async function deleteCredentialsById(req: Request, res: Response) {
+  const user = res.locals.user;
+  const { id } = req.params;
+
+  await deleteCredentialById(user.email, Number(id));
+
+  res.status(200).send("OK");
 }

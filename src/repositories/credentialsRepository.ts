@@ -26,3 +26,7 @@ export async function findMany(userId: number) {
 
   return result;
 }
+
+export async function deleteById(credentialId: number) {
+  await prisma.credentials.delete({ where: { id: credentialId } });
+}

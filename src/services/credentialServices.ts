@@ -2,6 +2,7 @@ import { CreateCredential } from "../types/credentialTypes";
 import Cryptr from "cryptr";
 import { findByEmail } from "../repositories/authRepository";
 import {
+  deleteById,
   findById,
   findByTitleAndUserId,
   findMany,
@@ -19,7 +20,10 @@ export async function createCredential(
 
   const encryptedPassword = cryptr.encrypt(credential.password);
 
-  await verifyRepeatedTitleFromUserId(credential.title, user.id as Users["id"]);
+  await verifyRepeatedCredentialTitleFromUserId(
+    credential.title,
+    user.id as Users["id"]
+  );
 
   const credentialCreation: CreateCredential = {
     title: credential.title,
@@ -61,20 +65,40 @@ export async function getCredentialsById(email: string, credentialId: number) {
 
   return credential;
 }
-async function verifyCredentialExist(credentialId: number) {
+
+export async function deleteCredentialById(
+  email: string,
+  credentialId: number
+) {
+  const user = (await findByEmail(email)) as Users;
+
+  const credential = await verifyCredentialExist(credentialId);
+
+  isCredentialFromUserId(user.id, credential.userId);
+
+  await deleteById(credential.id);
+}
+
+export async function verifyCredentialExist(credentialId: number) {
   const credential = await findById(credentialId);
 
   if (!credential) throw { type: "NotFound", message: "Credential not exist!" };
 
   return credential;
 }
-async function verifyRepeatedTitleFromUserId(title: string, userId: number) {
+export async function verifyRepeatedCredentialTitleFromUserId(
+  title: string,
+  userId: number
+) {
   const existRepeatedTitle = await findByTitleAndUserId(title, userId);
 
   if (existRepeatedTitle)
     throw { type: "Conflict", message: "Title already created!" };
 }
-function isCredentialFromUserId(userId: number, credentialUserId: number) {
+export default function isCredentialFromUserId(
+  userId: number,
+  credentialUserId: number
+) {
   if (userId !== credentialUserId) {
     throw { type: "Unauthorized", message: "Not your credentials!" };
   }

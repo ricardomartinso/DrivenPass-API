@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createCredential,
-  deleteCredential,
+  deleteCredentialsById,
   getAllCredentials,
   getCredentialsById,
 } from "../controllers/credentialsController";
@@ -29,7 +29,7 @@ credentialsRouter.get(
 credentialsRouter.delete(
   "/credentials/:id",
   authenticateToken,
-  deleteCredential
+  deleteCredentialsById
 );
 
 export default credentialsRouter;
