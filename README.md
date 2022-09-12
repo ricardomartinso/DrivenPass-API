@@ -72,9 +72,460 @@ POST /log-in
 
 ```json
 {
-  "token": "RandomTokenGenerated"
+ "RandomTokenGenerated"
 }
 ```
+
+#
+
+### Create a credential
+
+```http
+POST /credentials
+```
+
+#### Request:
+
+| Body       | Type     | Description                       |
+| :--------- | :------- | :-------------------------------- |
+| `title`    | `string` | **Required**. Credential title    |
+| `url`      | `string` | **Required**. Credential url      |
+| `username` | `string` | **Required**. Credential username |
+| `password` | `string` | **Required**. Credential password |
+
+</br>
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Get all credential from user
+
+```http
+GET /credentials
+```
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "user": "user@email",
+  "userId": "number",
+  "credentials": ["array of user credentials"]
+}
+```
+
+#
+
+### Get credentials by ID
+
+```http
+GET /credentials/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "id": "number",
+  "title": "string",
+  "url": "url",
+  "username": "string",
+  "password": "string",
+  "userId": "number"
+}
+```
+
+#
+
+### Delete credentials by ID
+
+```http
+DELETE /credentials/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Create a safe notes
+
+```http
+POST /safe-notes
+```
+
+#### Request:
+
+| Body          | Type     | Description                         |
+| :------------ | :------- | :---------------------------------- |
+| `title`       | `string` | **Required**. Title                 |
+| `noteTitle`   | `string` | **Required**. Safe note name        |
+| `description` | `string` | **Required**. Safe note description |
+
+`noteTitle max length: 40`
+`description max length: 1000`
+
+</br>
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Get all safe notes from user
+
+```http
+GET /safe-notes
+```
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "user": "user@email",
+  "userId": "number",
+  "safeNotes": ["array of user safe notes"]
+}
+```
+
+#
+
+### Get safe notes by ID
+
+```http
+GET /safe-notes/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "id": "number",
+  "title": "string",
+  "noteTitle": "url",
+  "description": "string",
+  "userId": "number"
+}
+```
+
+#
+
+### Delete safe notes by ID
+
+```http
+DELETE /safe-notes/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Create a cards
+
+```http
+POST /cards
+```
+
+#### Request:
+
+| Body             | Type        | Description                             |
+| :--------------- | :---------- | :-------------------------------------- |
+| `title`          | `string`    | **Required**. Card Title                |
+| `number`         | `string`    | **Required**. Card number               |
+| `cardHolderName` | `string`    | **Required**. Card holder name          |
+| `cvc`            | `string`    | **Required**. Card cvc                  |
+| `password`       | `string`    | **Required**. Card password             |
+| `expirationDate` | `date`      | **Required**. Card expirationDate       |
+| `isVirtual`      | `boolean`   | **Required**. If Card is virtual or not |
+| `type`           | `card Type` | **Required**. credit, debit or both     |
+
+`card number length: 16`
+`cvc length: 3`
+`type can only be credit, debit or both (string)`
+
+</br>
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Get all cards from user
+
+```http
+GET /cards
+```
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "user": "user@email",
+  "userId": "number",
+  "cards": ["array of user cards"]
+}
+```
+
+#
+
+### Get cards by ID
+
+```http
+GET /cards/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "id": "number",
+  "title": "string",
+  "number": "string",
+  "cardHolderName": "string",
+  "cvc": "string",
+  "expirationDate": "date",
+  "password": "string",
+  "isVirtual": "boolean",
+  "type": "card Type",
+  "userId": "number"
+}
+```
+
+#
+
+### Delete cards by ID
+
+```http
+DELETE /cards/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Create a wi-fi
+
+```http
+POST /wi-fis
+```
+
+#### Request:
+
+| Body          | Type     | Description                 |
+| :------------ | :------- | :-------------------------- |
+| `title`       | `string` | **Required**. Wifi Title    |
+| `networkName` | `string` | **Required**. Wifi name     |
+| `password`    | `string` | **Required**. Wifi password |
+
+</br>
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#
+
+### Get all wi-fis from user
+
+```http
+GET /wi-fis
+```
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "user": "user@email",
+  "userId": "number",
+  "wifis": ["array of user wifis"]
+}
+```
+
+#
+
+### Get wi-fis by ID
+
+```http
+GET /wi-fis/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
+
+#### Response:
+
+```json
+{
+  "id": "number",
+  "title": "string",
+  "networkName": "string",
+  "password": "string",
+  "userId": "number"
+}
+```
+
+#
+
+### Delete wi-fis by ID
+
+```http
+DELETE /wi-fis/:id
+```
+
+#### Request:
+
+| Params | Type      | Description                 |
+| :----- | :-------- | :-------------------------- |
+| `id`   | `integer` | **Required**. Credential Id |
+
+####
+
+| Headers         | Type     | Description                    |
+| :-------------- | :------- | :----------------------------- |
+| `Authorization` | `string` | **Required**. 'Bearer `token`' |
+
+####
 
 #
 
@@ -108,20 +559,6 @@ Install dependencies
 
 ```bash
   npm install
-```
-
-Create database
-
-```bash
-  cd src/db/dbConfig
-```
-
-```bash
-  bash ./create-database
-```
-
-```bash
-  cd ../../..
 ```
 
 Start the server
