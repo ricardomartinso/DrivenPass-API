@@ -1,5 +1,4 @@
 import { CreateCredential } from "../types/credentialTypes";
-import Cryptr from "cryptr";
 import { findByEmail } from "../repositories/authRepository";
 import {
   deleteById,
@@ -7,8 +6,9 @@ import {
   findByTitleAndUserId,
   findMany,
 } from "../repositories/credentialsRepository";
-import { Credentials, Users } from "@prisma/client";
+import { Users } from "@prisma/client";
 import { create } from "../repositories/credentialsRepository";
+import Cryptr from "cryptr";
 const privateKey = process.env.SECRET_KEY as string;
 const cryptr = new Cryptr(privateKey);
 

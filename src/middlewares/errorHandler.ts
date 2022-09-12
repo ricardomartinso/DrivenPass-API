@@ -20,6 +20,7 @@ export default function errorHandler(
       return res.status(401).send(error.message);
     }
   }
+  console.log(error);
 
   return res.status(500).send("Server error has ocurred!");
 }

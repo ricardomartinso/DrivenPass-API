@@ -1,11 +1,13 @@
 import Joi from "joi";
-import { Cards } from "@prisma/client";
+
+const numberPattern: any = /^[1-9]{16}$/;
+const cvcPattern: any = /^[1-9]{3}$/;
 
 export const cardSchema = Joi.object({
   title: Joi.string().required(),
-  number: Joi.string().required().min(16).max(16),
+  number: Joi.string().regex(numberPattern).required(),
   cardHolderName: Joi.string().required(),
-  cvc: Joi.number().min(3).max(3).required(),
+  cvc: Joi.string().regex(cvcPattern).required(),
   password: Joi.string().required(),
   expirationDate: Joi.date().required(),
   isVirtual: Joi.boolean().required(),

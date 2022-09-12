@@ -20,14 +20,14 @@ export async function createSafeNote(
     user.id as Users["id"]
   );
 
-  const safeNoteCreationation: CreateSafeNotes = {
+  const safeNoteCreation: CreateSafeNotes = {
     title: safeNote.title,
     noteTitle: safeNote.noteTitle,
     description: safeNote.description,
     userId: user.id,
   };
 
-  await create(safeNoteCreationation);
+  await create(safeNoteCreation);
 }
 
 export async function getAllSafeNotesService(email: string) {

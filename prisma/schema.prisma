@@ -66,10 +66,10 @@ enum CardType {
 model Cards {
   id Int @id @default(autoincrement())
   title String
-  number String @db.VarChar(16)
+  number String 
   cardHolderName String
-  cvc String @db.VarChar(3)
-  expirationDate DateTime @db.Date
+  cvc String 
+  expirationDate String
   password String
   isVirtual Boolean
   type CardType
