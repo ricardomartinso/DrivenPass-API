@@ -13,8 +13,8 @@ const safeNotesRouter = Router();
 
 safeNotesRouter.post(
   "/safe-notes",
-  authenticateToken,
   validateSchemaMiddleware(safeNoteSchema),
+  authenticateToken,
   createSafeNote
 );
 

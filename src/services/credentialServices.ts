@@ -18,6 +18,8 @@ export async function createCredential(
 ) {
   const user = (await findByEmail(userEmail)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
+
   const encryptedPassword = cryptr.encrypt(credential.password);
 
   await verifyRepeatedCredentialTitleFromUserId(
@@ -37,7 +39,7 @@ export async function createCredential(
 }
 export async function getAllCredentialsService(email: string) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const credentials = await findMany(user.id);
 
   const credentialsWithPassword = credentials.map((credential) => {
@@ -56,7 +58,7 @@ export async function getAllCredentialsService(email: string) {
 }
 export async function getCredentialsById(email: string, credentialId: number) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const credential = await verifyCredentialExist(credentialId);
 
   isCredentialFromUserId(user.id, credential.userId);
@@ -71,7 +73,7 @@ export async function deleteCredentialById(
   credentialId: number
 ) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const credential = await verifyCredentialExist(credentialId);
 
   isCredentialFromUserId(user.id, credential.userId);

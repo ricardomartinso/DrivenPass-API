@@ -15,6 +15,8 @@ export async function createSafeNote(
 ) {
   const user = (await findByEmail(userEmail)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
+
   await verifyRepeatedSafeNoteTitleFromUserId(
     safeNote.title,
     user.id as Users["id"]
@@ -33,6 +35,7 @@ export async function createSafeNote(
 export async function getAllSafeNotesService(email: string) {
   const user = (await findByEmail(email)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const safeNotes = await findMany(user.id);
 
   const getSafeNotes = {
@@ -45,7 +48,7 @@ export async function getAllSafeNotesService(email: string) {
 }
 export async function getSafeNoteById(email: string, safeNoteId: number) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const safeNote = await verifySafeNoteExist(safeNoteId);
 
   isSafeNoteFromUserId(user.id, safeNote.userId);
@@ -54,7 +57,7 @@ export async function getSafeNoteById(email: string, safeNoteId: number) {
 }
 export async function deleteSafeNoteById(email: string, safeNoteId: number) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const safeNote = await verifySafeNoteExist(safeNoteId);
 
   isSafeNoteFromUserId(user.id, safeNote.userId);

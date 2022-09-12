@@ -15,6 +15,8 @@ const cryptr = new Cryptr(privateKey);
 export async function createCard(userEmail: string, card: CreateCards) {
   const user = (await findByEmail(userEmail)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
+
   const encryptedPassword = cryptr.encrypt(card.password);
   const encryptedCvc = cryptr.encrypt(card.cvc);
 
@@ -37,7 +39,7 @@ export async function createCard(userEmail: string, card: CreateCards) {
 
 export async function getAllCards(email: string) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const cards = await findMany(user.id);
 
   const cardsWithoutEncrypt = cards.map((cardInfo) => {
@@ -58,7 +60,7 @@ export async function getAllCards(email: string) {
 
 export async function getCardById(email: string, cardId: number) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const card = await verifyCardExist(cardId);
 
   card.cvc = cryptr.decrypt(card.cvc);
@@ -71,7 +73,7 @@ export async function getCardById(email: string, cardId: number) {
 
 export async function deleteCardById(email: string, cardId: number) {
   const user = (await findByEmail(email)) as Users;
-
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
   const card = await verifyCardExist(cardId);
 
   isCardFromUserId(user.id, card.userId);

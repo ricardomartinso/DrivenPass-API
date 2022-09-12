@@ -13,8 +13,8 @@ const credentialsRouter = Router();
 
 credentialsRouter.post(
   "/credentials",
-  authenticateToken,
   validateSchemaMiddleware(credentialSchema),
+  authenticateToken,
   createCredential
 );
 

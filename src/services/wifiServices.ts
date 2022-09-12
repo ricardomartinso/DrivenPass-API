@@ -16,6 +16,8 @@ const cryptr = new Cryptr(privateKey);
 export async function createWifi(userEmail: string, wifi: CreateWifi) {
   const user = (await findByEmail(userEmail)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
+
   await verifyRepeatedWifiTitleFromUserId(wifi.title, user.id as Users["id"]);
 
   const encryptedPassword = cryptr.encrypt(wifi.password);
@@ -32,6 +34,8 @@ export async function createWifi(userEmail: string, wifi: CreateWifi) {
 
 export async function getAllWifis(email: string) {
   const user = (await findByEmail(email)) as Users;
+
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
 
   const wifis = await findMany(user.id);
 
@@ -51,6 +55,8 @@ export async function getAllWifis(email: string) {
 export async function getWifiById(email: string, WifiId: number) {
   const user = (await findByEmail(email)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
+
   const wifi = await verifyWifiExist(WifiId);
 
   wifi.password = cryptr.decrypt(wifi.password);
@@ -63,6 +69,8 @@ export async function getWifiById(email: string, WifiId: number) {
 export async function deleteWifiById(email: string, WifiId: number) {
   const user = (await findByEmail(email)) as Users;
 
+  if (!user) throw { type: "NotFound", message: "User doesn't exist!" };
+
   const wifi = await verifyWifiExist(WifiId);
 
   isWifiFromUserId(user.id, wifi.userId);
@@ -71,15 +79,15 @@ export async function deleteWifiById(email: string, WifiId: number) {
 }
 
 export async function verifyWifiExist(WifiId: number) {
-  const Wifi = await findById(WifiId);
+  const wifi = await findById(WifiId);
 
-  if (!Wifi) throw { type: "NotFound", message: "Wi-fi not exist!" };
+  if (!wifi) throw { type: "NotFound", message: "Wi-fi not exist!" };
 
-  return Wifi;
+  return wifi;
 }
 
-export default function isWifiFromUserId(userId: number, WifiUserId: number) {
-  if (userId !== WifiUserId) {
+export default function isWifiFromUserId(userId: number, wifiUserId: number) {
+  if (userId !== wifiUserId) {
     throw { type: "Unauthorized", message: "Not your wi-fi!" };
   }
 }
