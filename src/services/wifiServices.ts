@@ -73,14 +73,14 @@ export async function deleteWifiById(email: string, WifiId: number) {
 export async function verifyWifiExist(WifiId: number) {
   const Wifi = await findById(WifiId);
 
-  if (!Wifi) throw { type: "NotFound", message: "Safe note not exist!" };
+  if (!Wifi) throw { type: "NotFound", message: "Wi-fi not exist!" };
 
   return Wifi;
 }
 
 export default function isWifiFromUserId(userId: number, WifiUserId: number) {
   if (userId !== WifiUserId) {
-    throw { type: "Unauthorized", message: "Not your safe note!" };
+    throw { type: "Unauthorized", message: "Not your wi-fi!" };
   }
 }
 async function verifyRepeatedWifiTitleFromUserId(
